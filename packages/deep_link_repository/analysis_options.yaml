@@ -1,0 +1,17 @@
+include: package:flutter_lints/flutter.yaml
+analyzer:
+  exclude: [test/**/*.mocks.dart, lib/env_config.dart]
+linter:
+  rules:
+    constant_identifier_names: true
+    prefer_const_constructors: true
+    file_names: false
+
+    prefer_typing_uninitialized_variables: false
+    avoid_print: true
+    library_prefixes: false
+    void_checks: false
+    prefer_function_declarations_over_variables: false
+    iterable_contains_unrelated_type: false
+    require_trailing_commas: true
+    avoid_relative_lib_imports: true

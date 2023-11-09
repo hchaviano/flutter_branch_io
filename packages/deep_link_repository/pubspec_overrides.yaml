@@ -1,0 +1,18 @@
+# melos_managed_dependency_overrides: analytics_repository,automated_flow_repository,core_services,dynamic_form_repository,notification_client,notification_repository,survey_repository,dashboard_repository
+dependency_overrides:
+  analytics_repository:
+    path: ../analytics_repository
+  automated_flow_repository:
+    path: ../automated_flow_repository
+  core_services:
+    path: ../core_services
+  dashboard_repository:
+    path: ../dashboard_repository
+  dynamic_form_repository:
+    path: ../dynamic_form_repository
+  notification_client:
+    path: ../notification_client
+  notification_repository:
+    path: ../notification_repository
+  survey_repository:
+    path: ../survey_repository
