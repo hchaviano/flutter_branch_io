@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.10.1
+  flutter: 3.13.0
 
 dependencies:
   deep_link_repository:
@@ -19,10 +19,6 @@ dependencies:
   intl: ^0.18.0
 
 dev_dependencies:
-  bloc_test: ^9.1.2
-  flutter_test:
-    sdk: flutter
-  mocktail: ^0.3.0
   very_good_analysis: ^5.0.0
 
 flutter:

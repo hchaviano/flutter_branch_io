@@ -5,12 +5,12 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.10.1
+  flutter: 3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_branch_sdk: ^6.6.0
+  flutter_branch_sdk: ^7.0.0
 
 dev_dependencies:
   build_runner: ^2.1.7

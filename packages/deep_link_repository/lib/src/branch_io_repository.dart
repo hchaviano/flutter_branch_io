@@ -7,7 +7,9 @@ class BranchIORepository extends DeepLinkRepository {
   late BranchUniversalObject _buo;
 
   @override
-  void initialize({required String canonicalUrl}) {
+  Future<void> initialize({required String canonicalUrl}) async {
+    await FlutterBranchSdk.init(
+        useTestKey: true);
     _buo = BranchUniversalObject(
       canonicalIdentifier: 'flutter/branch',
       canonicalUrl: canonicalUrl,
@@ -16,49 +18,56 @@ class BranchIORepository extends DeepLinkRepository {
 
   @override
   FutureOr<String?> generateDeepLink({
-    String? alias,
+    required String alias,
+    Map<String, dynamic>? params,
   }) async {
+    assert(alias.isNotEmpty, () {
+      throw Exception('Error: alias cannot be empty.');
+    });
     try {
-      final linkProperties = BranchLinkProperties(
-        alias: alias ?? '',
-      );
+      final linkProperties = BranchLinkProperties(alias: alias);
 
+      if (params != null) {
+        for (final param in params.entries) {
+          linkProperties.addControlParam(param.key, param.value);
+        }
+      }
       final response = await FlutterBranchSdk.getShortUrl(
         buo: _buo,
         linkProperties: linkProperties,
       );
 
-      if (!response.success) {
-        return response.errorMessage;
+      if (response.success) {
+        return response.result as String;
+      } else {
+        throw DeepLinkRepositoryException(
+          message: response.errorMessage,
+        );
       }
-
-      return response.result;
     } catch (error) {
-      DeepLinkRepositoryException(message: error.toString());
+      throw DeepLinkRepositoryException(
+        message: error.toString(),
+      );
     }
-    return null;
   }
 
   @override
   Future<Map> getFirstReferringParams() async {
-    return await FlutterBranchSdk.getFirstReferringParams();
+    try {
+      final params = await FlutterBranchSdk.getFirstReferringParams();
+      return params;
+    } catch (error) {
+      throw DeepLinkRepositoryException(message: error.toString());
+    }
   }
 
   @override
   Future<Map> getLatestReferringParams() async {
-    return await FlutterBranchSdk.getLatestReferringParams();
-  }
-
-  @override
-  Future<void> showShareSheet() async {
     try {
-      await FlutterBranchSdk.showShareSheet(
-        buo: _buo,
-        linkProperties: BranchLinkProperties(),
-        messageText: '',
-      );
+      final params = await FlutterBranchSdk.getLatestReferringParams();
+      return params;
     } catch (error) {
-      DeepLinkRepositoryException(message: error.toString());
+      throw DeepLinkRepositoryException(message: error.toString());
     }
   }
 }
